@@ -1,177 +1,112 @@
 <div
-      class="octane-ai-quiz"
-      data-quiz-id="MiNTbA7dnyHupXAy"
-      data-embed-type="fullpage"
-      data-mobile-height="match_browser"
-      data-desktop-height="match_browser"
-    ></div>
-    <script
-      src="https://app.octaneai.com/mjjxhsyh85of2y82/quiz.js"
-      async
-      defer
-    ></script>
+  class="octane-ai-quiz"
+  data-quiz-id="MiNTbA7dnyHupXAy"
+  data-embed-type="fullpage"
+  data-mobile-height="match_browser"
+  data-desktop-height="match_browser"
+></div>
+<script
+  src="https://app.octaneai.com/mjjxhsyh85of2y82/quiz.js"
+  async
+  defer
+></script>
 
+<!-- CUSTOM SCRIPT BELOW -->
+<script>
+  document.addEventListener(
+    "octane.quiz.completed",
+    function (event) {
+      const answers = event.detail.answers;
 
-    // CUSTOM SCRIPT BELOW
-    <script>
-      let answers;
-      let userName;
-      let userProblems;
-      let userLocation;
-      let userPanel;
-      document.addEventListener(
-        "octane.quiz.completed",
-        function (event) {
-          console.log("octane.quiz.completed event", event.detail.answers);
+      const userName = answers["Octane: What can we call you?"];
+      const userProblems =
+        answers["What kinds of problems are you dealing with?"];
+      const userLocation = answers["Octane: What is your zip code"];
+      const userPanel =
+        answers[
+          "Octane: Do you prefer to invest in a zero maintenance solar panel that never requires charging or a less expensive panel that may require occasional in-person upkeep?"
+        ];
+      const userLens =
+        answers[
+          "Octane: Do you want the option of a Wide Angle Lens to provide a wider field of view?"
+        ];
+      const userGPS =
+        answers[
+          "Octane: Do you need to see GPS coordinates on each photo in your Barn Owl HQ Account?"
+        ];
+      const userCharge =
+        answers[
+          "Octane: In the event that your panel cannot charge due to low sunlight, do you need to upgrade more for back up battery power"
+        ];
 
-          // saving all the answers as variables
-          answers = event.detail.answers;
-          userName = answers["Octane: What can we call you?"];
-          userProblems =
-            answers["What kinds of problems are you dealing with?"];
-          userLocation = answers["Octane: What is your zip code"];
-          userPanel =
-            answers[
-              "Octane: Do you prefer to invest in a zero maintenance solar panel that never requires charging or a less expensive panel that may require occasional in-person upkeep?"
-            ];
-          userLens =
-            answers[
-              "Octane: Do you want the option of a Wide Angle Lens to provide a wider field of view?"
-            ];
-          userGPS =
-            answers[
-              "Octane: Do you need to see GPS coordinates on each photo in your Barn Owl HQ Account?"
-            ];
-          userCharge = answers["Octane: What is your question?"]; // answer 1 == yes, answer 2 == no
+      const params = new URLSearchParams({
+        name: encodeURIComponent(userName),
+        problems: encodeURIComponent(userProblems),
+        location: encodeURIComponent(userLocation),
+      });
 
-          // url 1
-          if (
-            userPanel == "Low Maintenance Panel" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 2" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-mini-premium`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
+      let baseURL;
 
-          // url 2
-          if (
-            userPanel == "Low Maintenance Panel" &&
-            userGPS == "No" &&
-            userCharge == "Answer 2" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-reachcam-premium`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
+      switch (true) {
+        case userPanel === "Low Maintenance Panel" &&
+          userGPS === "Yes" &&
+          userCharge === "No" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-mini-premium`;
+          break;
+        case userPanel === "Low Maintenance Panel" &&
+          userGPS === "No" &&
+          userCharge === "No" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-reachcam-premium`;
+          break;
+        case userPanel === "Zero Maintenance Panel (+$60)" &&
+          userGPS === "Yes" &&
+          userCharge === "No" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-mini-mega`;
+          break;
+        case userPanel === "Zero Maintenance Panel (+$60)" &&
+          userGPS === "No" &&
+          userCharge === "No" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-reachcam-mega?variant=40875097292882`;
+          break;
+        case userPanel === "Zero Maintenance Panel (+$60)" &&
+          userGPS === "Yes" &&
+          userCharge === "Yes" &&
+          userLens === "Yes":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-wide-j1/`;
+          break;
+        case userPanel === "Low Maintenance Panel" &&
+          userGPS === "Yes" &&
+          userCharge === "Yes" &&
+          userLens === "Yes":
+          baseURL = `https://barnowl.tech/products/wide-low-main`;
+          break;
+        case userPanel === "Low Maintenance Panel" &&
+          userGPS === "Yes" &&
+          userCharge === "Yes" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-rangecam-premium`;
+          break;
+        case userPanel === "Zero Maintenance Panel (+$60)" &&
+          userGPS === "Yes" &&
+          userCharge === "Yes" &&
+          userLens === "No":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-rangecam-mega?variant=40875096834130`;
+          break;
+        default:
+          console.log("No matching URL found for the selected options.");
+          console.log(userPanel);
+          console.log(userLens);
+          console.log(userGPS);
+          console.log(userCharge);
+          return; // Exit if no match found
+      }
 
-          // url 3
-          if (
-            userPanel == "Zero Maintenance Panel (+$70)\n\n\n\n\n\n" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 2" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-mini-mega`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-
-          // url 4, name comes out as Null in the page, but URL looks fine
-          if (
-            userPanel == "Zero Maintenance Panel (+$70)\n\n\n\n\n\n" &&
-            userGPS == "No" &&
-            userCharge == "Answer 2" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-reachcam-mega?variant=40875097292882`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-
-          // url 5
-          if (
-            userPanel == "Zero Maintenance Panel (+$70)\n\n\n\n\n\n" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 1" &&
-            userLens == "Wide (100° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-wide-j1/`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-
-          // url 6
-          if (
-            userPanel == "Low Maintenance Panel" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 1" &&
-            userLens == "Wide (100° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/wide-low-main`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-
-          // url 7
-          if (
-            userPanel == "Low Maintenance Panel" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 1" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-rangecam-premium`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-
-          // url 8, name comes out as Null in the page, but URL looks fine
-          if (
-            userPanel == "Zero Maintenance Panel (+$70)\n\n\n\n\n\n" &&
-            userGPS == "Yes" &&
-            userCharge == "Answer 1" &&
-            userLens == "Standard (60° View)"
-          ) {
-            const baseURL = `https://barnowl.tech/products/custom-camera-system-rangecam-mega?variant=40875096834130`;
-            const params = new URLSearchParams({
-              name: encodeURIComponent(userName),
-              problems: encodeURIComponent(userProblems),
-              location: encodeURIComponent(userLocation),
-            });
-            window.location.href = `${baseURL}?${params.toString()}`;
-          }
-        },
-        false
-      );
-    </script>
+      window.location.href = `${baseURL}?${params.toString()}`;
+    },
+    false
+  );
+</script>

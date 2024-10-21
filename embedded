@@ -12,7 +12,7 @@
 ></script>
 
 <!-- CUSTOM SCRIPT BELOW -->
-<script>
+<script defer>
   document.addEventListener(
     "octane.quiz.completed",
     function (event) {

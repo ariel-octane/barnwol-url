@@ -48,6 +48,18 @@
       let baseURL;
 
       switch (true) {
+        case userPanel === "Zero Maintenance Panel (+$60)" &&
+          userGPS === "Yes" &&
+          userCharge === "No" &&
+          userLens === "Yes":
+          baseURL = `https://barnowl.tech/products/custom-camera-system-wide-j1/`;
+          break;
+        case userPanel === "Low Maintenance Panel" &&
+          userGPS === "Yes" &&
+          userCharge === "No" &&
+          userLens === "Yes":
+          baseURL = `https://barnowl.tech/products/wide-low-main`;
+          break;
         case userPanel === "Low Maintenance Panel" &&
           userGPS === "Yes" &&
           userCharge === "No" &&
